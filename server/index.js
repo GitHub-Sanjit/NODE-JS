@@ -1,21 +1,45 @@
-const http = require("http");
 const express = require("express");
+const users = require("./MOCK_DATA.json");
 
 const app = express();
+const PORT = 8000;
 
-app.get("/", (req, res) => {
-  return res.send("Hello From Home Page.");
+//Routes
+app.get("/users", (req, res) => {
+  const html = `
+        ${users.map((user) => `<li>${user.first_name}</li>`).join("")}
+    `;
+  res.send(html);
 });
 
-app.get("/about", (req, res) => {
-  return res.send("Hello From About Page." + "Hey" + req.query.name);
+// REST API
+app.get("/api/users", (req, res) => {
+  return res.json(users);
 });
 
-app.get("/profile", (req, res) => {
-  return res.send("Hello From Profile Page.");
+app
+  .route("/api/users/:id")
+  .get((req, res) => {
+    const id = Number(req.params.id);
+    const user = users.find((user) => user.id === id);
+    return res.json(user);
+  })
+  .patch((req, res) => {
+    const id = Number(req.params.id);
+
+    // TODO: Edit the user with id
+    return res.json({ status: "Pending." });
+  })
+  .delete((req, res) => {
+    const id = Number(req.params.id);
+
+    // TODO: Delete the user with id
+    return res.json({ status: "Pending." });
+  });
+
+app.post("/api/users", (req, res) => {
+  // TODO: Create new user
+  return res.json({ status: "Pending." });
 });
 
-app.listen(8000, () => {
-  console.log("Server Started Again.");
-  console.log("Server Started.");
-});
+app.listen(PORT, () => console.log(`Server Started at PORT: ${PORT}`));
