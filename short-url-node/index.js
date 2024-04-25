@@ -4,7 +4,7 @@ const urlRoute = require("./routes/url");
 const URL = require("./models/url");
 
 const app = express();
-const PORT = 8001;
+const PORT = 8000;
 
 connectToMongoDB(
   "mongodb+srv://node1:node1@cluster0.wz775d8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
